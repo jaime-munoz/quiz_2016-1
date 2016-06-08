@@ -17,6 +17,11 @@ router.get('/', function(req, res, next) {
 });
 
 
+/* GET author page. */
+router.get("/author", function(req, res, next) {
+	res.render("author");
+});
+
 // Autoload de parametros
 router.param('quizId', quizController.load);  // autoload :quizId
 router.param('userId', userController.load);  // autoload :userId
