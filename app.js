@@ -58,6 +58,23 @@ app.use(function(req, res, next) {
    next();
 });
 
+app.use(function(req, res, next) {
+	var tAutologout = 1000*60*2;	
+	var user = req.session.user;
+	var tNow = new Date();		
+	var tAction = tNow.getTime();	
+
+	if (!user) {
+		next();
+	} else if (tAction-user.tLastAction>=tAutologout) {
+		delete req.session.user;
+		next();
+	} else{
+		user.tLastAction = tAction;
+		next();
+	}
+});
+
 app.use('/', routes);
 
 // catch 404 and forward to error handler
